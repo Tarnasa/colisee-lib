@@ -25,6 +25,9 @@ export const GAMES_SUBMISSIONS_TABLE = "games_submissions";
 export const USER_ROLES = ["user", "admin"];
 export type USER_ROLE = "user" | "admin";
 
+export const SUBMISSION_LANGUAGES = ["py", "cpp", "java", "js", "ts", "cs", "lua", "human"];
+export type SUBMISSION_LANGUAGE_TYPE = "py" | "cpp" | "java" | "js" | "ts" | "cs" | "lua" | "human";
+
 export const SUBMISSION_STATUSES = ["queued", "building", "finished", "failed"];
 export type SUBMISSION_STATUS_TYPE = "queued" | "building" | "finished" | "failed";
 
@@ -157,6 +160,8 @@ export async function initializeDatabase(dryRun: boolean = true): Promise<string
                 .references(`${TEAMS_TABLE}.id`);
 
             table.integer("version").notNullable();
+            table.binary("data").notNullable();
+            table.enu("lang", SUBMISSION_LANGUAGES).notNullable();
             table.enu("status", SUBMISSION_STATUSES).notNullable();
 
             table.string("submission_url");
